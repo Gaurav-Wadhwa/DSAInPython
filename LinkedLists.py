@@ -127,3 +127,44 @@ class LinkedList:
             temp.next = before
             before = temp
             temp = after
+    # To find the middle node
+    def find_middle_node(self):
+        slow = self.head
+        fast = self.head
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+        return slow
+
+    # To check whether LL has loop
+    def has_loop(self):
+        slow = self.head
+        fast = self.head
+        while fast is not None and fast.next is not None:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+        return False
+        
+    # To remove duplicates in the LL
+    def remove_duplicates(self):
+        seen = set()
+        prev = None
+        current = self.head
+        while current is not None:
+            if current.value in seen:
+                prev.next = current.next
+            else:
+                seen.add(current.value)
+                prev = current
+            current = current.next
+
+    # Binary to decimal
+    def binary_to_decimal(self):
+        current = self.head
+        num = 0
+        while current is not None:
+           num = (num * 2) + current.value
+           current = current.next
+        return num
