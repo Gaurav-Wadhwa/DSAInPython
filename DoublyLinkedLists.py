@@ -122,3 +122,28 @@ class DoublyLinkedList:
         temp.prev = None
         self.length -= 1
         return temp
+
+    # Palindrome checker
+    def is_palindrome(self):
+        mid_index = self.length // 2
+        forward = self.head
+        backward = self.tail
+        for _ in range(mid_index):
+            if forward.value != backward.value:
+                return False
+            forward = forward.next
+            backward = backward.prev
+        return True
+
+    # Reverse
+    def reverse(self):
+        temp = None
+        current = self.head
+        while current is not None:
+            current.prev = current.next
+            current.next = temp
+            temp = current
+            current = current.prev
+        temp = self.head
+        self.head = self.tail
+        self.tail = temp
