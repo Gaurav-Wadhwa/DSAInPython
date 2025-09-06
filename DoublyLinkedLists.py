@@ -147,3 +147,28 @@ class DoublyLinkedList:
         temp = self.head
         self.head = self.tail
         self.tail = temp
+    # Partition List
+    def partition_list(self, x):
+        if self.length == 0:
+            return None
+        dummy1 = Node(0)
+        dummy2 = Node(0)
+        prev1 = dummy1
+        prev2 = dummy2
+        current = self.head
+        while current is not None:
+            if current.value < x:
+                prev1.next = current
+                current.prev = prev1
+                prev1 = current
+            else:
+                prev2.next = current
+                current.prev = prev2
+                prev2 = current
+            current = current.next
+        prev1.next = dummy2.next
+        prev2.next = None
+        if dummy2.next is not None:
+            dummy2.next.prev = prev1
+        self.head = dummy1.next
+        self.head.prev = None
