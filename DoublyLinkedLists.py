@@ -172,3 +172,47 @@ class DoublyLinkedList:
             dummy2.next.prev = prev1
         self.head = dummy1.next
         self.head.prev = None
+
+    # Reverse between
+    def reverse_between(self, start_index, end_index):
+        if start_index < 0 or end_index >= self.length or start_index == end_index:
+            return None
+        dummy = Node(0)
+        dummy.next = self.head
+        self.head.prev = dummy
+        prev = dummy
+        for _ in range(start_index):
+            prev = prev.next
+        current = prev.next
+        for _ in range(end_index - start_index):
+            to_move = current.next
+            current.next = to_move.next
+            if to_move.next is not None:
+                to_move.next.prev = current
+            to_move.next = prev.next
+            prev.next.prev = to_move
+            prev.next = to_move
+            to_move.prev = prev
+        self.head = dummy.next
+        self.head.prev = None
+
+    # Swap nodes in pairs
+    def swap_pairs(self):
+        if self.length == 0:
+            return None
+        dummy = Node(0)
+        dummy.next = self.head
+        self.head.prev = dummy
+        first = self.head
+        while first is not None and first.next is not None:
+            temp = first.prev
+            second = first.next
+            first.next = second.next
+            if second.next is not None:
+                second.next.prev = first
+            second.next = temp.next
+            second.prev = temp
+            temp.next = second
+            first = first.next
+        self.head = dummy.next
+        self.head.prev = None
