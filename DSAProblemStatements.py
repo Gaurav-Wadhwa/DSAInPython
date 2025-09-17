@@ -297,3 +297,304 @@ def max_subarray(nums):
     return max_sum
 
 #########################################################################################
+
+# Problem Statement 11
+# You are given an integer array nums. Your task is to return the length of the
+# longest strictly increasing subsequence in the array.
+#
+# A subsequence is a sequence that can be derived by deleting some or no elements
+# from the array without changing the order of the remaining elements.
+#
+# Input:
+# - nums (List[int]): A list of integers.
+#
+# Output:
+# - An integer representing the length of the longest strictly increasing subsequence.
+#
+# Examples:
+# Input:  [10, 9, 2, 5, 3, 7, 101, 18]
+# Output: 4
+# Explanation: The LIS is [2, 3, 7, 101].
+#
+# Input:  [7, 7, 7, 7, 7, 7, 7]
+# Output: 1
+#
+# Input:  [0, 1, 0, 3, 2, 3]
+# Output: 4
+
+def longest_increasing_subsequence(nums):
+    dp = [1] * len(nums)
+    for i in range(1, len(nums)):
+        for j in range(i):
+            if nums[j] < nums[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    return max(dp)
+
+#########################################################################################
+
+# Problem Statement 12
+# You are given an integer array prices where prices[i] represents the price of a
+# given stock on the i-th day.
+#
+# You are allowed to complete at most one transaction (i.e., buy one and sell one share).
+# Find and return the maximum profit you can achieve from this transaction. If no profit
+# is possible, return 0.
+#
+# Constraints:
+# - Each price[i] is a positive integer.
+# - You must buy before you sell.
+# - Function signature: def max_profit(prices):
+#
+# Examples:
+# Input:  [7,1,5,3,6,4]
+# Output: 5
+# Explanation: Buy on day 2 (price=1), sell on day 5 (price=6), profit = 6 - 1 = 5.
+#
+# Input:  [7,6,4,3,1]
+# Output: 0
+# Explanation: No profit is possible.
+
+def max_profit(prices):
+    profit = 0
+    for i in range(1, len(prices)):
+        if prices[i] > prices[i - 1]:
+            profit += prices[i] - prices[i - 1]
+    return profit
+
+#########################################################################################
+
+# Problem Statement 13
+# The Tribonacci sequence is defined as follows:
+# T0 = 0, T1 = 1, T2 = 1
+# For n >= 0, Tn+3 = Tn + Tn+1 + Tn+2
+#
+# Given an integer n, return the value of Tn.
+# Use a dynamic programming approach to optimize the solution.
+#
+# Constraints:
+# - 0 ≤ n ≤ 37
+# - Function signature: def tribonacci(n):
+#
+# Examples:
+# Input:  4
+# Output: 4
+# Explanation: T3 = 0 + 1 + 1 = 2, T4 = 1 + 1 + 2 = 4
+#
+# Input:  25
+# Output: 1389537
+
+def tribonacci(n):
+    dp = [0, 1, 1]
+    for i in range(3, n + 1):
+        dp.append(dp[i - 3] + dp[i - 2] + dp[i - 1])
+    return dp[n]
+
+#########################################################################################
+
+# Problem Statement 14
+# Given an integer numRows, return the first numRows of Pascal's triangle.
+# In Pascal's triangle, each number is the sum of the two numbers directly
+# above it. The first row is row 0, which is [1].
+#
+# Constraints:
+# - numRows >= 1
+# - Function signature: def generate(numRows):
+#
+# Input:
+# - numRows (int): The number of rows of Pascal's triangle to generate.
+#
+# Output:
+# - List[List[int]]: A list of lists where each list represents a row in Pascal's triangle.
+#
+# Examples:
+# Input:  3
+# Output: [
+#   [1],
+#   [1, 1],
+#   [1, 2, 1]
+# ]
+#
+# Input:  1
+# Output: [
+#   [1]
+# ]
+#
+# Input:  5
+# Output: [
+#   [1],
+#   [1, 1],
+#   [1, 2, 1],
+#   [1, 3, 3, 1],
+#   [1, 4, 6, 4, 1]
+# ]
+
+def pascal_triangle(n):
+    if n <= 0:
+        return []
+    triangle = [[1]]
+    for _ in range(1, n):
+        prev_row = triangle[-1]
+        new_row = [1]
+        for i in range(1, len(prev_row)):
+            new_row.append(prev_row[i - 1] + prev_row[i])
+        new_row.append(1)
+        triangle.append(new_row)
+    return triangle
+
+#########################################################################################
+
+# Problem Statement 15
+# Given an integer rowIndex, return the kth (0-indexed) row of Pascal's Triangle.
+#
+# In Pascal's Triangle:
+# - Each row starts and ends with 1.
+# - Each element in between is the sum of the two elements directly above it.
+#
+# Constraints:
+# - 0 <= rowIndex <= 33
+# - Function signature: def getRow(rowIndex):
+#
+# Input:
+# - rowIndex (int): The index of the row to return (0-indexed).
+#
+# Output:
+# - List[int]: The kth row of Pascal's Triangle.
+#
+# Examples:
+# Input: 3
+# Output: [1, 3, 3, 1]
+#
+# Input: 0
+# Output: [1]
+#
+# Input: 1
+# Output: [1, 1]
+
+def get_row(k):
+    row = [1] + [0] * k
+    for i in range(1, k + 1):
+        for j in range(i, 0, -1):
+            row[j] += row[j - 1]
+    return row
+
+#########################################################################################
+
+# Problem Statement 16
+# You are given an integer array cost where cost[i] is the cost of the i-th step
+# on a staircase. Once you pay the cost, you can either climb one or two steps.
+#
+# You can either start from step 0 or step 1. Return the minimum cost to reach
+# the top of the floor.
+#
+# Constraints:
+# - 2 <= len(cost) <= 1000
+# - Each cost[i] is a non-negative integer
+# - Function signature: def minCostClimbingStairs(cost):
+#
+# Input:
+# - cost (List[int]): An array of integers where cost[i] represents the cost of the i-th step.
+#
+# Output:
+# - An integer representing the minimum cost to reach the top.
+#
+# Examples:
+# Input:  [10, 15, 20]
+# Output: 15
+# Explanation: Start at index 1, pay 15, and climb two steps to reach the top.
+#
+# Input:  [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
+# Output: 6
+# Explanation: Take steps 0 → 2 → 4 → 6 → 7 → 9 → top with total cost = 6.
+
+def min_cost_climbing_stairs(cost):
+    dp = [None] * (len(cost) + 1)
+    dp[0], dp[1] = 0, 0
+    for i in range(2, len(dp)):
+        dp[i] = min(dp[i - 1] + cost[i - 1], dp[i - 2] + cost[i - 2])
+    return dp[-1]
+
+#########################################################################################
+
+# Problem Statement 17
+# You are climbing a staircase. It takes n steps to reach the top. Each time you
+# can either climb 1 step or 2 steps. Return the number of distinct ways you can
+# climb to the top.
+#
+# Constraints:
+# - 1 <= n <= 45
+# - Function signature: def climbStairs(n):
+#
+# Input:
+# - n (int): The total number of steps required to reach the top.
+#
+# Output:
+# - An integer representing the number of distinct ways to reach the top.
+#
+# Examples:
+# Input:  2
+# Output: 2
+# Explanation: There are two ways to climb to the top:
+# 1. 1 step + 1 step
+# 2. 2 steps
+#
+# Input:  3
+# Output: 3
+# Explanation: There are three ways to climb to the top:
+# 1. 1 step + 1 step + 1 step
+# 2. 1 step + 2 steps
+# 3. 2 steps + 1 step
+
+def climb_stairs(n):
+    if n == 1 or n == 2:
+        return n
+    dp = [None] * (n + 1)
+    dp[1], dp[2] = 1, 2
+    for i in range(3, len(dp)):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+#########################################################################################
+
+# Problem Statement 18
+# You are a professional robber planning to rob houses along a street. Each house
+# has a certain amount of money stashed. The only constraint stopping you from
+# robbing each of them is that adjacent houses have security systems connected,
+# and it will automatically contact the police if two adjacent houses are broken
+# into on the same night.
+#
+# Given an integer array nums representing the amount of money at each house,
+# return the maximum amount of money you can rob tonight without alerting the police.
+#
+# Constraints:
+# - 1 <= len(nums) <= 100
+# - 0 <= nums[i] <= 400
+# - Function signature: def rob(nums):
+#
+# Input:
+# - nums (List[int]): An array representing the amount of money in each house.
+#
+# Output:
+# - An integer representing the maximum money you can rob without triggering alarms.
+#
+# Examples:
+# Input:  [1, 2, 3, 1]
+# Output: 4
+# Explanation: Rob house 1 (1) + house 3 (3) = 4.
+#
+# Input:  [2, 7, 9, 3, 1]
+# Output: 12
+# Explanation: Rob house 1 (2) + house 3 (9) + house 5 (1) = 12.
+
+def rob(nums):
+    if len(nums) == 0:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+    dp = [0] * len(nums)
+    dp[0] = nums[0]
+    dp[1] = max(nums[0], nums[1])
+    for i in range(2, len(nums)):
+        dp[i] = max(dp[i - 1], nums[i] + dp[i - 2])
+    return dp[-1]
+
+#########################################################################################
