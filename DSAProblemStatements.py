@@ -598,3 +598,220 @@ def rob(nums):
     return dp[-1]
 
 #########################################################################################
+
+# Problem Statement 19
+# Given a triangle array, return the minimum path sum from top to bottom.
+# For each step, you may move to an adjacent number of the row below.
+# More formally, if you are on index i on the current row, you may move to either
+# index i or index i+1 on the next row.
+#
+# Constraints:
+# - 1 <= len(triangle) <= 200
+# - -10^4 <= triangle[i][j] <= 10^4
+# - Function signature: def minimumTotal(triangle):
+#
+# Input:
+# - triangle (List[List[int]]): A list of lists where each inner list represents a row in the triangle.
+#
+# Output:
+# - An integer representing the minimum path sum from the top to the bottom.
+#
+# Examples:
+# Input:  [[2], [3,4], [6,5,7], [4,1,8,3]]
+# Output: 11
+# Explanation: The path with the minimum sum is 2 → 3 → 5 → 1 = 11.
+#
+# Input:  [[-10]]
+# Output: -10
+# Explanation: There is only one element in the triangle.
+
+def minimumTotal(triangle):
+    for row in range(len(triangle) - 2, -1, -1):
+        for col in range(row + 1):
+            triangle[row][col] += min(triangle[row + 1][col], triangle[row + 1][col + 1])
+    return triangle[0][0]
+
+#########################################################################################
+
+# Problem Statement 20
+# Given an n × n array of integers matrix, return the minimum sum of any falling
+# path through the matrix.
+#
+# A falling path starts at any element in the first row and chooses the element
+# in the next row that is either directly below or diagonally left/right.
+# Specifically, the next element from position (row, col) will be one of:
+# (row + 1, col - 1), (row + 1, col), or (row + 1, col + 1).
+#
+# Constraints:
+# - 1 <= n <= 100
+# - -100 <= matrix[i][j] <= 100
+# - Function signature: def minFallingPathSum(matrix):
+#
+# Input:
+# - matrix (List[List[int]]): A 2D list where each inner list represents a row of the matrix.
+#
+# Output:
+# - An integer representing the minimum sum of any falling path through the matrix.
+#
+# Examples:
+# Input:  [[2, 1, 3], [6, 5, 4], [7, 8, 9]]
+# Output: 13
+# Explanation: The minimum path sum is 2 → 1 → 4 = 13.
+#
+# Input:  [[-19, 57], [-40, -5]]
+# Output: -59
+# Explanation: The minimum path sum is -19 → -40 = -59.
+
+def min_falling_path_sum(matrix):
+    n = len(matrix)
+    for row in range(n - 2, -1, -1):
+        for col in range(n):
+            if col == 0:
+                matrix[row][col] += min(matrix[row + 1][col], matrix[row + 1][col + 1])
+            elif col == len(matrix[row]) - 1:
+                matrix[row][col] += min(matrix[row + 1][col - 1], matrix[row + 1][col])
+            else:
+                matrix[row][col] += min(matrix[row + 1][col - 1], matrix[row + 1][col], matrix[row + 1][col + 1])
+    return min(matrix[0])
+
+#########################################################################################
+
+# Problem Statement 21
+# Given an n × n integer matrix grid, return the minimum sum of a falling path
+# with non-zero shifts. A falling path with non-zero shifts is a choice of
+# exactly one element from each row of grid such that no two elements chosen in
+# adjacent rows are in the same column.
+#
+# Constraints:
+# - 1 <= n <= 200
+# - -99 <= grid[i][j] <= 99
+# - Function signature: def minFallingPathSum(grid):
+#
+# Input:
+# - grid (List[List[int]]): A 2D list where each inner list represents a row of the matrix.
+#
+# Output:
+# - An integer representing the minimum sum of a falling path with non-zero shifts.
+#
+# Examples:
+# Input:  [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+# Output: 13
+# Explanation: The minimum falling path sum is 1 → 5 → 7 = 13.
+#
+# Input:  [[5, 1, 3], [2, 4, 6], [7, 8, 9]]
+# Output: 11
+# Explanation: The minimum falling path sum is 1 → 2 → 8 = 11.
+
+def min_falling_path_sum(grid):
+    n = len(grid)
+    dp = grid[-1]
+    for row in range(n - 2, -1, -1):
+        new_dp = [0] * n
+        min1 = float('inf')
+        min1_idx = -1
+        min2 = float('inf')
+        for col in range(n):
+            if dp[col] < min1:
+                min2 = min1
+                min1 = dp[col]
+                min1_idx = col
+            elif dp[col] < min2:
+                min2 = dp[col]
+        for col in range(n):
+            if col == min1_idx:
+                new_dp[col] = grid[row][col] + min2
+            else:
+                new_dp[col] = grid[row][col] + min1
+        dp = new_dp
+    return min(dp)
+
+#########################################################################################
+
+# Problem Statement 22
+# There is a robot on an m × n grid. The robot starts at the top-left corner
+# (i.e., grid[0][0]) and aims to reach the bottom-right corner
+# (i.e., grid[m - 1][n - 1]). The robot can only move either down or right
+# at any point in time.
+#
+# Constraints:
+# - 1 <= m, n <= 100
+# - The answer is guaranteed to be less than or equal to 2 * 10^9
+# - Function signature: def uniquePaths(m, n):
+#
+# Input:
+# - m (int): Number of rows in the grid.
+# - n (int): Number of columns in the grid.
+#
+# Output:
+# - An integer representing the number of unique paths from top-left
+#   to bottom-right corner.
+#
+# Examples:
+# Input:  m = 3, n = 7
+# Output: 28
+# Explanation: There are 28 unique paths from the top-left to the bottom-right corner.
+#
+# Input:  m = 3, n = 2
+# Output: 3
+# Explanation: There are 3 unique paths from the top-left to the bottom-right corner.
+
+def unique_paths(m, n):
+    dp = [[1] * n for _ in range(m)]
+    for row in range(1, m):
+        for col in range(1, n):
+            dp[row][col] = dp[row - 1][col] + dp[row][col - 1]
+    return dp[-1][-1]
+
+#########################################################################################
+
+# Problem Statement 23
+# You are given an m × n integer grid. There is a robot initially located at the
+# top-left corner (i.e., grid[0][0]) and it tries to move to the bottom-right
+# corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or
+# right at any point in time.
+#
+# An obstacle and space are marked as 1 and 0 respectively in grid. A path that
+# the robot takes cannot include any square that is an obstacle.
+#
+# Constraints:
+# - 1 <= m, n <= 100
+# - grid[i][j] is either 0 (open space) or 1 (obstacle)
+# - The starting cell and ending cell may also be obstacles
+# - Function signature: def uniquePathsWithObstacles(grid):
+#
+# Input:
+# - grid (List[List[int]]): An m × n grid where grid[i][j] is either 0 (open space)
+#   or 1 (obstacle).
+#
+# Output:
+# - An integer representing the number of possible unique paths from the top-left
+#   corner to the bottom-right corner avoiding obstacles.
+#
+# Examples:
+# Input:  [[0,0,0],[0,1,0],[0,0,0]]
+# Output: 2
+# Explanation: There are 2 unique paths from the top-left to the bottom-right corner.
+#
+# Input:  [[0,1,0],[0,0,0],[0,0,0]]
+# Output: 3
+# Explanation: There are 3 unique paths from the top-left to the bottom-right corner.
+
+def unique_paths_with_obstacles(grid):
+    m = len(grid)
+    n = len(grid[0])
+    dp = [[0] * n for _ in range(m)]
+    if grid[0][0] == 0:
+        dp[0][0] = 1
+    for row in range(1, m):
+        if grid[row][0] == 0:
+            dp[row][0] = dp[row - 1][0]
+    for col in range(1, n):
+        if grid[0][col] == 0:
+            dp[0][col] = dp[0][col - 1]
+    for row in range(1, m):
+        for col in range(1, n):
+            if grid[row][col] == 0:
+                dp[row][col] = dp[row - 1][col] + dp[row][col - 1]
+    return dp[-1][-1]
+
+#########################################################################################
