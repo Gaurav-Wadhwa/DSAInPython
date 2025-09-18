@@ -333,26 +333,35 @@ def longest_increasing_subsequence(nums):
 #########################################################################################
 
 # Problem Statement 12
-# You are given an integer array prices where prices[i] represents the price of a
+# You are given an integer array prices where prices[i] represents the price of a 
 # given stock on the i-th day.
 #
-# You are allowed to complete at most one transaction (i.e., buy one and sell one share).
-# Find and return the maximum profit you can achieve from this transaction. If no profit
-# is possible, return 0.
+# On each day, you may decide to buy and/or sell the stock. However, you can only 
+# hold at most one share of the stock at any time. You can also buy and then 
+# immediately sell the stock on the same day.
 #
-# Constraints:
-# - Each price[i] is a positive integer.
-# - You must buy before you sell.
-# - Function signature: def max_profit(prices):
+# Find and return the maximum profit you can achieve.
+#
+# Input:
+# - prices (List[int]): An array representing the prices of the stock on each day.
+#
+# Output:
+# - An integer representing the maximum profit you can achieve.
 #
 # Examples:
 # Input:  [7,1,5,3,6,4]
-# Output: 5
-# Explanation: Buy on day 2 (price=1), sell on day 5 (price=6), profit = 6 - 1 = 5.
+# Output: 7
+# Explanation: Buy on day 2 (price=1) and sell on day 3 (price=5), profit=4. 
+#              Then buy on day 4 (price=3) and sell on day 5 (price=6), profit=3. 
+#              Total profit = 7.
+#
+# Input:  [1,2,3,4,5]
+# Output: 4
+# Explanation: Buy on day 1 (price=1) and sell on day 5 (price=5). Profit = 4.
 #
 # Input:  [7,6,4,3,1]
 # Output: 0
-# Explanation: No profit is possible.
+# Explanation: No profitable transactions are possible.
 
 def max_profit(prices):
     profit = 0
@@ -815,3 +824,4 @@ def unique_paths_with_obstacles(grid):
     return dp[-1][-1]
 
 #########################################################################################
+
