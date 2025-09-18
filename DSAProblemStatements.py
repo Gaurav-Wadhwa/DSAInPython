@@ -437,15 +437,14 @@ def tribonacci(n):
 #   [1, 4, 6, 4, 1]
 # ]
 
-def pascal_triangle(n):
-    if n <= 0:
+def generate(numRows):
+    if numRows == 0:
         return []
     triangle = [[1]]
-    for _ in range(1, n):
-        prev_row = triangle[-1]
+    for i in range(1, numRows):
         new_row = [1]
-        for i in range(1, len(prev_row)):
-            new_row.append(prev_row[i - 1] + prev_row[i])
+        for j in range(1, i):
+            new_row.append(triangle[i - 1][j - 1] + triangle[i - 1][j])
         new_row.append(1)
         triangle.append(new_row)
     return triangle
@@ -824,4 +823,5 @@ def unique_paths_with_obstacles(grid):
     return dp[-1][-1]
 
 #########################################################################################
+
 
