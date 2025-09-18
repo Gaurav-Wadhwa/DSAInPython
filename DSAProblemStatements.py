@@ -478,12 +478,13 @@ def generate(numRows):
 # Input: 1
 # Output: [1, 1]
 
-def get_row(k):
-    row = [1] + [0] * k
-    for i in range(1, k + 1):
+def get_row(rowIndex):
+    dp = [0] * (rowIndex + 1)
+    dp[0] = 1
+    for i in range(1, rowIndex + 1):
         for j in range(i, 0, -1):
-            row[j] += row[j - 1]
-    return row
+            dp[j] = dp[j] + dp[j - 1]
+    return dp
 
 #########################################################################################
 
@@ -823,5 +824,6 @@ def unique_paths_with_obstacles(grid):
     return dp[-1][-1]
 
 #########################################################################################
+
 
 
