@@ -1050,3 +1050,378 @@ def contains_duplicate(nums):
 
 #########################################################################################
 
+# Problem Statement 30
+# Given a list of integers, write a function to find the maximum element in the list.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Function signature: def find_max_element(lst):
+#
+# Input:
+# - lst (List[int]): A list of integers.
+#
+# Output:
+# - int: The maximum element in the list.
+#
+# Examples:
+# Input:  [3, 5, 2, 9, 6]
+# Output: 9
+#
+# Input:  [-1, -2, -3, -4]
+# Output: -1
+#
+# Input:  [7]
+# Output: 7
+
+def find_max_element(lst):
+    highest = lst[0]
+    for num in lst[1:]:
+        if num > highest:
+            highest = num
+    return highest
+
+#########################################################################################
+
+# Problem Statement 31
+# Given a list of integers, write a function to find the sum of all the elements in the list.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Function signature: def sum_of_elements(lst):
+#
+# Input:
+# - lst (List[int]): A list of integers.
+#
+# Output:
+# - int: The sum of all the elements in the list.
+#
+# Examples:
+# Input:  [7]
+# Output: 7
+#
+# Input:  [-1, -2, -3, -4]
+# Output: -10
+#
+# Input:  [1, 2, 3, 4, 5]
+# Output: 15
+
+def sum_of_elements(lst):
+    s = 0
+    for num in lst:
+        s += num
+    return s
+
+#########################################################################################
+
+# Problem Statement 32
+# Given a list of integers, determine if it is a palindrome.
+# A list is considered a palindrome if it reads the same forward and backward.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Function signature: def is_palindrome(lst):
+#
+# Input:
+# - lst (List[int]): A list of integers.
+#
+# Output:
+# - bool: Return True if the list is a palindrome, otherwise False.
+#
+# Examples:
+# Input:  [7, 8, 9, 8, 7]
+# Output: True
+#
+# Input:  [1, 2, 3, 4, 5]
+# Output: False
+#
+# Input:  [1, 2, 3, 2, 1]
+# Output: True
+
+def is_palindrome(lst):
+    m = len(lst) // 2
+    i = 0
+    j = len(lst) - 1
+    while i < m:
+        if lst[i] != lst[j]:
+            return False
+        else:
+            i += 1
+            j -= 1
+    return True
+
+#########################################################################################
+
+# Problem Statement 33
+# Given a list of integers, write a function to reverse the order of elements in the list.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Function signature: def reverse_list(lst):
+#
+# Input:
+# - lst (List[int]): A list of integers.
+#
+# Output:
+# - List[int]: The list with elements in reversed order.
+#
+# Examples:
+# Input:  [1, 2, 3, 4, 5]
+# Output: [5, 4, 3, 2, 1]
+#
+# Input:  [10, 20, 30]
+# Output: [30, 20, 10]
+#
+# Input:  [7, 8, 9]
+# Output: [9, 8, 7]
+
+def reverse_list(lst):
+    rev_lst = []
+    for i in range(len(lst) - 1, -1, -1):
+        rev_lst.append(lst[i])
+    return rev_lst
+
+#########################################################################################
+
+# Problem Statement 34
+# Given a list of integers and an integer D, write a function to rotate the list
+# to the left by D positions.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - 0 <= D <= 10^6 (use modulo operation to handle D > len(ARR))
+# - Function signature: def rotate_left(ARR, D):
+#
+# Input:
+# - ARR (List[int]): A list of integers.
+# - D (int): The number of positions to rotate the list to the left.
+#
+# Output:
+# - List[int]: The list after rotating it to the left by D positions.
+#
+# Examples:
+# Input:  ARR = [1, 2, 3, 4, 5], D = 2
+# Output: [3, 4, 5, 1, 2]
+#
+# Input:  ARR = [10, 20, 30, 40, 50], D = 3
+# Output: [40, 50, 10, 20, 30]
+#
+# Input:  ARR = [7, 8, 9, 10], D = 1
+# Output: [8, 9, 10, 7]
+
+def rotate_left(ARR, D):
+    D = D % len(ARR)
+    ARR[:] = ARR[D:] + ARR[:D]
+    return ARR
+
+#########################################################################################
+
+# Problem Statement 35
+# You are given a large integer represented as an integer array digits,
+# where each digits[i] is the i-th digit of the integer. The digits are ordered
+# from most significant to least significant in left-to-right order.
+# The large integer does not contain any leading zeroes.
+#
+# Write a function to increment the large integer by one and return the resulting array of digits.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Each element in the list is between 0 and 9 (inclusive).
+# - Function signature: def plus_one(digits):
+#
+# Input:
+# - digits (List[int]): A list of integers where each integer represents a digit of a large number.
+#
+# Output:
+# - List[int]: The list representing the number after incrementing it by one.
+#
+# Examples:
+# Input:  [1, 2, 3]
+# Output: [1, 2, 4]
+#
+# Input:  [4, 3, 2, 1]
+# Output: [4, 3, 2, 2]
+#
+# Input:  [9, 9, 9]
+# Output: [1, 0, 0, 0]
+
+def plus_one(digits):
+    for i in range(len(digits) - 1, -1, -1):
+        if digits[i] == 9:
+            digits[i] = 0
+        else:
+            digits[i] += 1
+            return digits
+    return [1] + digits
+
+#########################################################################################
+
+# Problem Statement 36
+# Given an array nums containing n distinct numbers in the range [0, n],
+# return the only number in the range that is missing from the array.
+#
+# Constraints:
+# - The array contains exactly n distinct numbers from the range [0, n].
+# - The size of the array is at least 1.
+# - Function signature: def find_missing_number(nums):
+#
+# Input:
+# - nums (List[int]): A list of integers where each integer is unique and in the range [0, n].
+#
+# Output:
+# - int: The missing number in the range [0, n].
+#
+# Examples:
+# Input:  [3, 0, 1]
+# Output: 2
+#
+# Input:  [0, 1]
+# Output: 2
+#
+# Input:  [8, 7, 6, 4, 3, 2, 0, 1]
+# Output: 5
+
+def find_missing_number(nums):
+    n = len(nums)
+    expected_sum = n * (n + 1) // 2
+    actual_sum = sum(nums)
+    return expected_sum - actual_sum
+
+#########################################################################################
+
+# Problem Statement 37
+# Write a function that checks whether the given array is sorted in non-decreasing order.
+# The array is considered sorted if every element is less than or equal to the next element.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Function signature: def is_sorted(arr):
+#
+# Input:
+# - arr (List[int]): A list of integers.
+#
+# Output:
+# - bool: True if the array is sorted in non-decreasing order, False otherwise.
+#
+# Examples:
+# Input:  [5, 4, 3, 2, 1]
+# Output: False
+#
+# Input:  [1, 3, 2, 4, 5]
+# Output: False
+#
+# Input:  [1, 2, 3, 4, 5]
+# Output: True
+
+def is_sorted(arr):
+    for i in range(1, len(arr)):
+        if arr[i] < arr[i - 1]:
+            return False
+    return True
+
+#########################################################################################
+
+# Problem Statement 38
+# Given an integer array nums, write a function to move all 0s to the end of the array
+# while maintaining the relative order of the non-zero elements.
+#
+# Constraints:
+# - The list will contain at least one element.
+# - Function signature: def move_zeroes(nums):
+#
+# Input:
+# - nums (List[int]): A list of integers.
+#
+# Output:
+# - List[int]: The list nums with all 0s moved to the end, preserving the order of non-zero elements.
+#
+# Examples:
+# Input:  [0, 1, 0, 3, 12]
+# Output: [1, 3, 12, 0, 0]
+#
+# Input:  [0, 0, 1]
+# Output: [1, 0, 0]
+#
+# Input:  [4, 2, 4, 0, 0, 3, 0, 5, 1, 0]
+# Output: [4, 2, 4, 3, 5, 1, 0, 0, 0, 0]
+
+def move_zeroes(nums):
+    insert_pos = 0
+    for num in nums:
+        if num != 0:
+            nums[insert_pos] = num
+            insert_pos += 1
+    while insert_pos < len(nums):
+        nums[insert_pos] = 0
+        insert_pos += 1
+    return nums
+
+#########################################################################################
+
+# Problem Statement 39
+# Given two integer arrays nums1 and nums2, return an array of their intersection.
+# Each element in the result must be unique, and you may return the result in any order.
+#
+# Constraints:
+# - 1 <= len(nums1), len(nums2) <= 1000
+# - Each integer in nums1 and nums2 is in the range [-10^9, 10^9].
+# - Function signature: def intersection(nums1, nums2):
+#
+# Input:
+# - nums1 (List[int]): An array of integers.
+# - nums2 (List[int]): An array of integers.
+#
+# Output:
+# - List[int]: An array of unique integers that are present in both nums1 and nums2.
+#
+# Examples:
+# Input:  nums1 = [1, 2, 3], nums2 = [4, 5, 6]
+# Output: []
+#
+# Input:  nums1 = [1, 2, 2, 1], nums2 = [2, 2]
+# Output: [2]
+#
+# Input:  nums1 = [4, 9, 5], nums2 = [9, 4, 9, 8, 4]
+# Output: [9, 4]
+
+def intersection(nums1, nums2):
+    set1 = set(nums1)
+    set2 = set(nums2)
+    intersection = set()
+    for num in set2:
+        if num in set1:
+            intersection.add(num)
+    return list(intersection)
+
+#########################################################################################
+
+# Problem Statement 40
+# Given a binary array nums, return the maximum number of consecutive 1s in the array.
+#
+# Input:
+# - nums (List[int]): A binary array where each element is either 0 or 1.
+#
+# Output:
+# - int: The maximum number of consecutive 1s in the array.
+#
+# Examples:
+# Input:  [0, 0, 0, 0]
+# Output: 0
+#
+# Input:  [1, 0, 1, 1, 0, 1, 1, 1, 1]
+# Output: 4
+#
+# Input:  [1, 1, 0, 1, 1, 1]
+# Output: 3
+
+def find_max_consecutive_ones(nums):
+    max_ones = 0
+    ones = 0
+    for num in nums:
+        if num == 1:
+            ones += 1
+        else:
+            ones = 0
+        max_ones = max(max_ones, ones)
+    return max_ones
+
+#########################################################################################
