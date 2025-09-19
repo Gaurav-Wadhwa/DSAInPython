@@ -825,5 +825,228 @@ def unique_paths_with_obstacles(grid):
 
 #########################################################################################
 
+# Problem Statement 24
+# You are given an array ARR of integers of size N. Your task is to determine:
+# 1. The number of unique elements that occur an odd number of times.
+# 2. The number of unique elements that occur an even number of times.
+#
+# Use a hashmap (Python dictionary) to track the frequency of each element.
+#
+# Input:
+# - ARR (List[int]): A list of integers.
+# - N (int): The size of the array.
+#
+# Output:
+# - A tuple of two integers:
+#   - The first integer is the count of elements occurring an odd number of times.
+#   - The second integer is the count of elements occurring an even number of times.
+#
+# Examples:
+# Input:  [1, 2, 3, 2, 3, 3]
+# Output: (2, 1)
+# Explanation: 1 occurs once (odd), 2 occurs twice (even), 3 occurs three times (odd).
+#              Odd = 2 (1,3), Even = 1 (2).
+#
+# Input:  [5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 7]
+# Output: (1, 2)
+# Explanation: 5 occurs 6 times (even), 6 occurs 4 times (even), 7 occurs once (odd).
+#              Odd = 1 (7), Even = 2 (5,6).
 
+def count_odd_even_occurrences(ARR):
+    my_dict = {}
+    for i in ARR:
+        my_dict[i] = my_dict.get(i, 0) + 1
+    odd = 0
+    even = 0
+    for key, value in my_dict.items():
+        if value % 2 != 0:
+            odd += 1
+        else:
+            even += 1
+    return (odd, even)
+
+#########################################################################################
+
+# Problem Statement 25
+# You are given an array of strings strs. Your task is to group the anagrams together 
+# and return the result. An anagram is a word formed by rearranging the letters of 
+# another, using all the original letters exactly once.
+#
+# Input:
+# - strs (List[str]): A list of strings.
+#
+# Output:
+# - List[List[str]]: A list of lists, where each inner list contains strings that are 
+#   anagrams of each other. The order of the output and the order of strings within 
+#   each group does not matter.
+#
+# Examples:
+# Input:  ["eat", "tea", "tan", "ate", "nat", "bat"]
+# Output: [["eat","tea","ate"], ["tan","nat"], ["bat"]]
+#
+# Input:  [""]
+# Output: [[""]]
+#
+# Input:  ["a"]
+# Output: [["a"]]
+
+def group_anagrams(strs):
+    anagrams = {}
+    for s in strs:
+        canonical = "".join(sorted(s))
+        if canonical in anagrams:
+            anagrams[canonical].append(s)
+        else:
+            anagrams[canonical] = [s]
+    return list(anagrams.values())
+
+#########################################################################################
+
+# Problem Statement 26
+# You are given an array of integers where the numbers are in random order. 
+# Your task is to find and return the number that occurs the most times in the array. 
+# If there are two or more numbers with the maximum frequency, return the number 
+# that appears first in the array (i.e., the number with the lowest index).
+#
+# Input:
+# - arr (List[int]): A list of integers.
+#
+# Output:
+# - An integer which is the most frequent number in the array. If there are ties, 
+#   the number that appears first should be returned.
+#
+# Examples:
+# Input:  [1, 3, 2, 2, 1, 1, 4, 5, 1]
+# Output: 1
+# Explanation: The number 1 appears 4 times (most frequent).
+#
+# Input:  [4, 4, 5, 5, 6, 6, 6]
+# Output: 6
+# Explanation: The number 6 appears 3 times (most frequent). 
+#              Even though 4 and 5 each appear twice, 6 occurs more often.
+
+def most_frequent_number(arr):
+    freq = {}
+    for n in arr:
+        freq[n] = freq.get(n, 0) + 1
+    max_freq = 0
+    mode = None
+    for n in arr:
+        if freq[n] > max_freq:
+            max_freq = freq[n]
+            mode = n
+    return mode
+
+#########################################################################################
+
+# Problem Statement 27
+# You are given an array ARR of integers. Your task is to find the greatest number 
+# in the array such that this number is also equal to the product of two different 
+# elements from the same array.
+#
+# If no such number exists, return -1.
+#
+# Input:
+# - ARR (List[int]): A list of integers.
+#
+# Output:
+# - An integer which is the greatest number that is also the product of two different 
+#   elements in the array. If no such number exists, return -1.
+#
+# Examples:
+# Input:  [1, 2, 3, 6, 12]
+# Output: 12
+# Explanation: The number 12 is present in the array and is equal to 2 * 6.
+#
+# Input:  [4, 2, 3, 8]
+# Output: 8
+# Explanation: The number 8 is present in the array and is equal to 2 * 4.
+#
+# Input:  [5, 7, 11]
+# Output: -1
+# Explanation: None of the numbers can be expressed as a product of two different 
+# elements from the array.
+
+def greatest_product_equal_to_element(arr):
+    s = set(arr)
+    sorted_arr = sorted(arr, reverse = True)
+    for x in sorted_arr:
+        for a in s:
+            if x % a == 0 and a != x:
+                b = x // a
+                if b in s:
+                    return x
+    return -1
+
+#########################################################################################
+
+# Problem Statement 28
+# You are given an array of integers nums and an integer target. Your task is to 
+# find two distinct indices in the array such that the sum of the elements at these 
+# indices equals the given target.
+#
+# You must return the indices in a list. You may not use the same element twice. 
+# You can assume that each input has exactly one solution.
+#
+# Input:
+# - nums (List[int]): A list of integers.
+# - target (int): The target sum.
+#
+# Output:
+# - List[int]: A list containing two indices [i, j] such that nums[i] + nums[j] = target.
+#
+# Examples:
+# Input:  nums = [2, 7, 11, 15], target = 9
+# Output: [0, 1]
+# Explanation: nums[0] + nums[1] = 2 + 7 = 9
+#
+# Input:  nums = [3, 2, 4], target = 6
+# Output: [1, 2]
+# Explanation: nums[1] + nums[2] = 2 + 4 = 6
+#
+# Input:  nums = [3, 3], target = 6
+# Output: [0, 1]
+# Explanation: nums[0] + nums[1] = 3 + 3 = 6
+
+def two_sum(nums, target):
+    my_dict = {}
+    for i in range(len(nums)):
+        complement = target - nums[i]
+        if complement in my_dict:
+            return [my_dict[complement], i]
+        my_dict[nums[i]] = i
+
+#########################################################################################
+
+# Problem Statement 29
+# You are given an integer array nums. Write a function that returns True 
+# if any value appears at least twice in the array and False if every element is distinct.
+#
+# Your task is to implement the solution using a hashmap (Python dictionary).
+#
+# Input:
+# - nums (List[int]): A list of integers.
+#
+# Output:
+# - bool: True if any value appears at least twice in the array, otherwise False.
+#
+# Examples:
+# Input:  [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]
+# Output: True
+#
+# Input:  [1, 2, 3, 4]
+# Output: False
+#
+# Input:  [1, 2, 3, 1]
+# Output: True
+
+def contains_duplicate(nums):
+    num_dict = {}
+    for num in nums:
+        if num in num_dict:
+            return True
+        num_dict[num] = True
+    return False
+
+#########################################################################################
 
